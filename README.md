@@ -1,4 +1,4 @@
-##くわしくはこちらのページをご覧ください</br>
+##くわしくは↓のページをご覧ください</br>
 http://hp0me.github.io/intuitionjs/
 
 ##About
