@@ -2,7 +2,6 @@
 http://hp0me.github.io/intuitionjs/
 
 ##About
-<img src="http://hp0me.github.io/intuitionjs/images/139.gif"/ width="100%">
 ・HTML5/Canvas上で動作するビジュアルプログラミングフレームワーク</br>
 ・独特なコーディングフローでCanvasの描画ルーティンワークをカット</br>
 ・プレイグラウンド用途（勉強、試し打ち、練習...etc）に特化</br>
