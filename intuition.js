@@ -1,3 +1,10 @@
+/**
+ * intuition.js v0.1.0
+ * http://hp0me.github.io/intuitionjs/
+ *
+ * Released under the MIT license.
+ */
+
 //(function( window, undefined ) {
 
 //Canvasを取得

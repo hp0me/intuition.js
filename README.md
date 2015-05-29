@@ -8,6 +8,9 @@ http://hp0me.github.io/intuitionjs/
 ・すべてのThing（基本オブジェクト）には位置・速度・加速度がある。</br>
 ・位置、速度、加速度はすべてベクトル（Vec2）で表現する
 
+##License
+MIT
+
 ##■ Intutionフロー
 ・intuition() でお手軽オブジェクト生成・描画（引数なしでもサクっと(0,0)に●登場）</br>
 ・生成されたオブジェクトのすべては_thingsという変数に自動的に格納</br>
