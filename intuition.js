@@ -29,6 +29,62 @@ Vec2.prototype.sub = function(target){
   this.y -= target.y;
 };
 
+//ベクトル掛け算
+Vec2.prototype.mult = function(n){
+  this.x *= n;
+  this.y *= n;
+};
+
+//ベクトル割り算
+Vec2.prototype.div = function(n){
+  this.x /= n;
+  this.y /= n;
+};
+
+//ベクトルを伸ばす
+Vec2.prototype.mag = function (n) {
+  this.normalize();
+  this.mult(n);
+};
+
+//ベクトルを限る
+Vec2.prototype.limit = function(n){
+  var msq = this.x * this.x + this.y * this.y;
+  if (msq > n * n) {
+    this.div(Math.sqrt(msq));
+    this.mult(n);
+  }
+};
+
+//ベクトル正規化
+Vec2.prototype.normalize = function(){
+  var myLength = Math.sqrt(this.x * this.x + this.y * this.y);
+  if(myLength > 0){
+    var reciprocal = 1 / myLength;
+    this.x *= reciprocal;
+    this.y *= reciprocal;
+  }
+};
+
+
+var vec = {};
+
+//ベクトル足し算（not prototype書き換え)
+vec.add = function(me,target){
+  var res = v(0,0);
+  res.add(me);
+  res.add(target);
+  return res;
+}
+
+//ベクトル引き算（not prototype書き換え)
+vec.sub = function(me,target){
+  var res = v(0,0);
+  res.add(me);
+  res.sub(target);
+  return res;
+}
+
 //ベクトル生成
 var v = function(x,y){
   var res = new Vec2(x,y);
@@ -55,7 +111,6 @@ var make = function(pos,vel,acc){
   _things.push(thing);
   return thing;
 }
-
 
 
 //基本オブジェクト (位置,速度,加速度)
@@ -93,6 +148,12 @@ var Thing = function(pos,vel,acc){
 
   //0じゃなければ重力がかかる（y方向）
   this.gravity = 0;
+
+  //AI(todo)
+  this.AI = "";
+  this.target = v(0,0);
+  this.AI_speed = 1.7;
+  this.AI_steer = 0.02;
 }
 
 
@@ -138,6 +199,28 @@ Thing.prototype.onPong = function(){
 Thing.prototype.setScale = function(scale){
     this.width = scale.x;
     this.height = scale.y;
+};
+
+//AI 操舵行動 seek(todo)
+Thing.prototype.seek = function(targetPos){
+  var desired = vec.sub(this.pos,targetPos);
+  desired.normalize();
+  desired.mag(-this.AI_speed);
+  var steer = vec.sub(desired,this.vel);
+  steer.limit(this.AI_steer);
+  this.acc = steer;
+};
+
+//AI 操舵行動 flee(todo)
+Thing.prototype.flee = function(targetPos){
+  var desired = vec.sub(this.pos,targetPos);
+  desired.normalize();
+  desired.mag(-this.AI_speed);
+  var steer = vec.sub(desired,this.vel);
+  steer.limit(this.AI_steer);
+  steer.mult(-1);
+  this.vel.limit(this.AI_speed);
+  this.acc = steer;
 };
 
 
@@ -201,9 +284,34 @@ var draw = function() {
     if(me.gravity != 0){
       me.vel.y += me.gravity;
     }
+
+    switch (me.AI){
+      case "seek":
+        me.seek(me.target);
+        break;
+      case "flee":
+        me.flee(me.target);
+      default:
+        break;
+    }
+
   }
 
 };
 
 
+//マウス処理
+canvas.onmousedown = (function(e){
+  if(typeof mouseDown == "function"){
+    mouseDown(v(e.x,e.y));
+  }
+});
+
+var log = function(arg){
+  console.log(arg);
+};
+
+var random = function(min,max){
+  return Math.floor(Math.random()*(max-min+1))+min;
+};
 //})( window );

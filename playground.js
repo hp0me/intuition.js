@@ -1,10 +1,10 @@
 var start = function(){
-  //跳ねるボール
-  var ball = make(v(0,0),v(2,0),v(0,0.044));
+  //バウンド
+  var ball = make(v(0,0),v(2,0),v(0,0.044)); //v(位置),v(速度),v(加速度)
   ball.pong = true;
 
   //端で折り返す
-  var obj = make(v(330,0),v(-1,0.3));
+  var obj = make(v(330,0),v(-1,0.3)); //v(位置),v(速度)
   obj.edge = true;
 };
 
@@ -247,6 +247,37 @@ if(timerCurrent >= timerMax){
   }
   timerCurrent = 0;
 }
+};
+*/
+
+/*
+マウスインプット
+var mouseDown = function(e){
+  log("mouse 押された")
+};
+*/
+
+/*AIテスト（todo）
+var bot,target,ball;
+
+var mySpeed = 1.7;
+var mySteer = 0.02;
+
+var start = function(){
+
+  ball = make(v(600,40),v(1.5,1.5));
+  ball.pong = true;
+  log(ball.visibility);
+
+  for(var i = 0; i< 1600;i++){
+    var cpu = make(v(random(0,600),random(0,500)));
+    cpu.pong = true;
+    cpu.AI = "seek";
+    cpu.target = ball.pos;
+    cpu.AI_speed = Math.random() * 1.6 + 0.3;
+    cpu.AI_steer = Math.random() * 0.03 + 0.01;
+  }
+
 };
 */
 
